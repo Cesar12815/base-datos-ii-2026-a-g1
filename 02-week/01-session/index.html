@@ -1,0 +1,370 @@
+<!-- =========================
+     BASE DE DATOS II · UNIDAD 1 · SEMANA 2
+     SESIÓN 1 (HTML 1/2) — versión desarrollada
+========================= -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Semana 2 (Sesión 1): Subconsultas y EXISTS | Base de Datos II</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<header class="main-header">
+    <div class="top-bar">
+        <div class="container brand-container">
+            <span class="brand-name">Base de Datos II</span><br>
+            <!-- <span class="brand-name">Unidad 1 · SQL Avanzado</span><br> -->
+            <span class="brand-name">Semana 2 · Sesión 1: Subconsultas, EXISTS y consultas anidadas</span>
+        </div>
+    </div>
+
+    <!-- 5 links = 5 secciones -->
+    <nav class="main-nav">
+        <div class="container">
+            <ul>
+                <li><a href="#introduccion" class="active">Inicio</a></li>
+                <li><a href="#subconsultas">Subconsultas</a></li>
+                <li><a href="#exists">EXISTS / NOT EXISTS</a></li>
+                <li><a href="#anidadas">Consultas anidadas</a></li>
+                <li><a href="#cierre">Cierre</a></li>
+            </ul>
+        </div>
+    </nav>
+</header>
+
+<main class="container main-content">
+
+    <section id="introduccion" class="hero-section">
+        <h1>Semana 2 · Sesión 1: Subconsultas y análisis de datos</h1>
+        <p class="lead">
+            En esta sesión aprenderás a construir consultas con “lógica por capas” usando
+            <strong>subconsultas</strong>, <strong>EXISTS / NOT EXISTS</strong> y <strong>consultas anidadas</strong>.
+            Estas técnicas te permiten resolver preguntas complejas como:
+            “quién cumple una condición”, “quién no cumple”, “quién está por encima del promedio” o
+            “qué registros pertenecen al top por grupo”.
+        </p>
+
+        <div class="reflection-box">
+            <h4>¿Qué vas a dominar hoy?</h4>
+            <ul style="margin-left: 20px;">
+                <li>Subconsultas en <strong>SELECT</strong>, <strong>FROM</strong> y <strong>WHERE</strong>.</li>
+                <li>Diferencia entre <strong>subconsulta correlacionada</strong> y <strong>no correlacionada</strong>.</li>
+                <li>Uso correcto de <strong>IN</strong>, <strong>=</strong>, <strong>ANY/ALL</strong> y <strong>EXISTS</strong>.</li>
+                <li>Patrones típicos de examen: “mayor que el promedio”, “sin registros asociados”, “filtros por conjunto”.</li>
+            </ul>
+        </div>
+    </section>
+
+    <hr class="divider">
+
+    <section id="subconsultas">
+        <h2>1. Subconsultas: consultas dentro de consultas</h2>
+
+        <p>
+            Una <strong>subconsulta</strong> es una consulta SQL que aparece dentro de otra consulta.
+            Se usa para obtener un valor, un conjunto o una tabla temporal que luego se utiliza en el cálculo final.
+        </p>
+
+        <blockquote class="definition-box">
+            <strong>Subconsulta escalar:</strong> devuelve 1 valor (1 fila × 1 columna).<br>
+            <strong>Subconsulta de conjunto:</strong> devuelve varias filas (útil con IN / ANY / ALL).<br>
+            <strong>Subconsulta derivada:</strong> subconsulta en FROM que actúa como una tabla temporal.
+        </blockquote>
+
+        <h3>1.1. ¿Dónde se pueden usar?</h3>
+        <div class="table-responsive">
+            <table class="styled-table">
+                <thead>
+                <tr>
+                    <th>Ubicación</th>
+                    <th>¿Para qué sirve?</th>
+                    <th>Ejemplo típico</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><strong>SELECT</strong></td>
+                    <td>Calcular un valor por fila (escalar).</td>
+                    <td>Promedio general, total del grupo, etc.</td>
+                </tr>
+                <tr>
+                    <td><strong>WHERE</strong></td>
+                    <td>Filtrar con base en un valor o conjunto.</td>
+                    <td>Mayor que el promedio, IN (lista), etc.</td>
+                </tr>
+                <tr>
+                    <td><strong>FROM</strong></td>
+                    <td>Crear una “tabla intermedia” para luego unir/filtrar.</td>
+                    <td>Pre-agregar y luego JOIN.</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="reflection-box">
+            <h4>Checklist de calidad (muy útil)</h4>
+            <ul style="margin-left: 20px;">
+                <li>¿Mi subconsulta devuelve <strong>1 valor</strong> o <strong>varios</strong>?</li>
+                <li>Si devuelve 1 valor → uso <strong>=</strong>, <strong>&gt;</strong>, <strong>&lt;</strong>…</li>
+                <li>Si devuelve varios valores → uso <strong>IN</strong> o <strong>EXISTS</strong>.</li>
+                <li>Si necesito comparar con “cualquier” o “todos” → <strong>ANY/ALL</strong>.</li>
+            </ul>
+        </div>
+
+        <h3>1.2. Subconsulta escalar (1 valor)</h3>
+        <p>
+            Ejemplo: listar matrículas con la nota final y el <strong>promedio general</strong> del semestre.
+            La subconsulta devuelve un único valor (el promedio).
+        </p>
+        <pre style="background:#0b1220;color:#e8eefc;padding:16px;border-radius:8px;overflow:auto;">
+SELECT  e.nombre AS estudiante,
+        a.codigo AS asignatura,
+        m.nota_final,
+        (SELECT ROUND(AVG(nota_final)::numeric, 2)
+         FROM matricula
+         WHERE semestre = '2026-1') AS promedio_general
+FROM matricula m
+JOIN estudiante e ON e.id = m.estudiante_id
+JOIN asignatura a ON a.id = m.asignatura_id
+WHERE m.semestre = '2026-1'
+ORDER BY a.codigo, e.nombre;
+        </pre>
+
+        <h3>1.3. Subconsulta en WHERE (mayor que el promedio)</h3>
+        <p>
+            Este es un patrón clásico: “estudiantes con nota mayor al promedio del semestre”.
+        </p>
+        <pre style="background:#0b1220;color:#e8eefc;padding:16px;border-radius:8px;overflow:auto;">
+SELECT  e.nombre,
+        a.codigo AS asignatura,
+        m.nota_final
+FROM matricula m
+JOIN estudiante e ON e.id = m.estudiante_id
+JOIN asignatura a ON a.id = m.asignatura_id
+WHERE m.semestre = '2026-1'
+  AND m.nota_final &gt; (
+      SELECT AVG(nota_final)
+      FROM matricula
+      WHERE semestre = '2026-1'
+  )
+ORDER BY m.nota_final DESC;
+        </pre>
+
+        <div class="reflection-box">
+            <h4>Error típico</h4>
+            <p>
+                Si tu subconsulta devuelve múltiples filas y usas <strong>=</strong>,
+                obtendrás error (“more than one row returned”). En ese caso debes usar <strong>IN</strong> o <strong>EXISTS</strong>.
+            </p>
+        </div>
+
+        <h3>1.4. Subconsulta de conjunto (IN)</h3>
+        <p>
+            Ejemplo: encontrar estudiantes que están matriculados en <strong>cualquier</strong> asignatura del área “BD”.
+            Aquí la subconsulta devuelve varias asignaturas_id, por eso se usa <strong>IN</strong>.
+        </p>
+        <pre style="background:#0b1220;color:#e8eefc;padding:16px;border-radius:8px;overflow:auto;">
+SELECT DISTINCT e.id, e.nombre
+FROM estudiante e
+JOIN matricula m ON m.estudiante_id = e.id
+WHERE m.semestre = '2026-1'
+  AND m.asignatura_id IN (
+      SELECT id
+      FROM asignatura
+      WHERE codigo LIKE 'BD%'
+  )
+ORDER BY e.nombre;
+        </pre>
+
+        <div class="reflection-box">
+            <h4>Tip anti-duplicación</h4>
+            <p>
+                Cuando haces JOIN con matrícula, un estudiante puede aparecer varias veces (una por asignatura).
+                Para evitar duplicados, usa <strong>DISTINCT</strong> o agrupa.
+            </p>
+        </div>
+    </section>
+
+    <section id="exists">
+        <h2>2. EXISTS y NOT EXISTS: “existe al menos una fila”</h2>
+
+        <p>
+            <strong>EXISTS</strong> no se enfoca en valores exactos, sino en si existe o no una fila que cumpla la condición.
+            Es ideal para preguntas como:
+            “estudiantes que sí tienen matrícula”, “estudiantes que no tienen matrícula”, “asignaturas con matrículas”, etc.
+        </p>
+
+        <blockquote class="definition-box">
+            <strong>EXISTS:</strong> retorna TRUE si la subconsulta devuelve al menos una fila.<br>
+            <strong>NOT EXISTS:</strong> retorna TRUE si la subconsulta NO devuelve filas.<br>
+            <strong>Subconsulta correlacionada:</strong> referencia columnas de la consulta externa.
+        </blockquote>
+
+        <h3>2.1. EXISTS (ejemplo: estudiantes con matrícula en el semestre)</h3>
+        <pre style="background:#0b1220;color:#e8eefc;padding:16px;border-radius:8px;overflow:auto;">
+SELECT e.id, e.nombre
+FROM estudiante e
+WHERE EXISTS (
+    SELECT 1
+    FROM matricula m
+    WHERE m.estudiante_id = e.id
+      AND m.semestre = '2026-1'
+)
+ORDER BY e.nombre;
+        </pre>
+
+        <h3>2.2. NOT EXISTS (ejemplo: estudiantes SIN matrícula)</h3>
+        <p>
+            Este patrón es equivalente al LEFT JOIN + WHERE m.id IS NULL (que viste en Semana 1).
+            Muchos docentes lo prefieren porque es claro y evita errores de filtro.
+        </p>
+        <pre style="background:#0b1220;color:#e8eefc;padding:16px;border-radius:8px;overflow:auto;">
+SELECT e.id, e.nombre
+FROM estudiante e
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM matricula m
+    WHERE m.estudiante_id = e.id
+      AND m.semestre = '2026-1'
+)
+ORDER BY e.nombre;
+        </pre>
+
+        <div class="reflection-box">
+            <h4>IN vs EXISTS (regla práctica)</h4>
+            <ul style="margin-left: 20px;">
+                <li><strong>IN</strong> compara contra una lista de valores (conjunto).</li>
+                <li><strong>EXISTS</strong> verifica existencia de filas (verdadero/falso).</li>
+                <li>Si el problema es “tiene / no tiene”, <strong>EXISTS</strong> suele ser la elección más directa.</li>
+            </ul>
+        </div>
+    </section>
+
+    <section id="anidadas">
+        <h2>3. Consultas anidadas: resolver por capas</h2>
+
+        <p>
+            Una consulta anidada combina subconsultas para resolver problemas en “pasos”.
+            Por ejemplo: primero calcular un promedio por asignatura, luego comparar cada estudiante con ese promedio.
+            Este enfoque es muy útil cuando el problema requiere un “resultado intermedio”.
+        </p>
+
+        <h3>3.1. Subconsulta en FROM (tabla derivada)</h3>
+        <p>
+            Ejemplo: obtener el promedio por asignatura en una subconsulta y luego unirlo para comparar.
+            Esto suele ser más legible que repetir la misma subconsulta varias veces.
+        </p>
+        <pre style="background:#0b1220;color:#e8eefc;padding:16px;border-radius:8px;overflow:auto;">
+SELECT  a.codigo AS asignatura,
+        e.nombre AS estudiante,
+        m.nota_final,
+        p.promedio_asignatura,
+        ROUND((m.nota_final - p.promedio_asignatura)::numeric, 2) AS diferencia
+FROM matricula m
+JOIN estudiante e ON e.id = m.estudiante_id
+JOIN asignatura a ON a.id = m.asignatura_id
+JOIN (
+    SELECT asignatura_id, AVG(nota_final) AS promedio_asignatura
+    FROM matricula
+    WHERE semestre = '2026-1'
+    GROUP BY asignatura_id
+) p ON p.asignatura_id = m.asignatura_id
+WHERE m.semestre = '2026-1'
+ORDER BY a.codigo, diferencia DESC;
+        </pre>
+
+        <div class="reflection-box">
+            <h4>Tip de diseño</h4>
+            <p>
+                Cuando notes que repites la misma lógica en varias partes, considera:
+                <strong>subconsulta en FROM</strong> (tabla derivada) o más adelante un <strong>CTE</strong> (Semana 3/4).
+            </p>
+        </div>
+
+        <h3>3.2. ANY / ALL (comparación avanzada)</h3>
+        <p>
+            Útil cuando quieres comparar contra un conjunto:
+            <strong>ANY</strong> = contra cualquiera; <strong>ALL</strong> = contra todos.
+            Ejemplo: estudiantes con nota mayor que <em>cualquier</em> nota de un grupo (ANY) o mayor que <em>todas</em> (ALL).
+        </p>
+
+        <pre style="background:#0b1220;color:#e8eefc;padding:16px;border-radius:8px;overflow:auto;">
+-- Mayor que CUALQUIERA (ANY): mayor que al menos una nota del grupo
+SELECT e.nombre, m.nota_final
+FROM matricula m
+JOIN estudiante e ON e.id = m.estudiante_id
+WHERE m.semestre = '2026-1'
+  AND m.nota_final &gt; ANY (
+      SELECT nota_final
+      FROM matricula
+      WHERE semestre = '2026-1'
+        AND asignatura_id = 10
+  );
+        </pre>
+
+        <pre style="background:#0b1220;color:#e8eefc;padding:16px;border-radius:8px;overflow:auto;">
+-- Mayor que TODAS (ALL): mayor que la máxima nota del grupo (equivalente a &gt; MAX(...))
+SELECT e.nombre, m.nota_final
+FROM matricula m
+JOIN estudiante e ON e.id = m.estudiante_id
+WHERE m.semestre = '2026-1'
+  AND m.nota_final &gt; ALL (
+      SELECT nota_final
+      FROM matricula
+      WHERE semestre = '2026-1'
+        AND asignatura_id = 10
+  );
+        </pre>
+
+        <div class="reflection-box">
+            <h4>Tip</h4>
+            <p>
+                <strong>&gt; ALL (subconsulta)</strong> suele ser equivalente a <strong>&gt; (SELECT MAX(...))</strong>.
+                Úsalo cuando el ejercicio lo pida explícitamente o como demostración de dominio.
+            </p>
+        </div>
+    </section>
+
+    <section id="cierre">
+        <h2>4. Cierre de la sesión</h2>
+
+        <p>
+            Hoy aprendiste a construir consultas con lógica avanzada usando subconsultas y EXISTS:
+            filtrar por promedios, detectar existencia/no existencia y resolver problemas por capas.
+        </p>
+
+        <div class="reflection-box">
+            <h4>Lo que debes llevarte (en 4 ideas)</h4>
+            <ul style="margin-left: 20px;">
+                <li>Subconsulta escalar → devuelve 1 valor (sirve para comparaciones directas).</li>
+                <li>Subconsulta de conjunto → devuelve varios valores (IN / ANY / ALL).</li>
+                <li>EXISTS/NOT EXISTS → patrón directo para “tiene / no tiene”.</li>
+                <li>Consultas anidadas → resuelven por pasos cuando hay resultados intermedios.</li>
+            </ul>
+        </div>
+
+        <p>
+            En la <strong>Sesión 2</strong> aplicarás estos patrones en ejercicios más analíticos:
+            “mayores que el promedio por asignatura”, “top por condición”, “filtros por existencia” y
+            al final harás una <strong>actividad práctica no obligatoria</strong>.
+        </p>
+    </section>
+
+</main>
+
+<footer class="main-footer">
+    <div class="container">
+        <p>Material docente para: Base de Datos II</p>
+        <p>Unidad 1 · Semana 2 · Sesión 1 · Subconsultas y EXISTS · Ingeniería de Sistemas</p>
+        <p>© 2026 CORHUILA</p>
+    </div>
+</footer>
+
+<button id="scrollTopBtn" title="Volver arriba">↑</button>
+<script src="js/script.js"></script>
+</body>
+</html>
