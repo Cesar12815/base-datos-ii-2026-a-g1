@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Taller Subconsultas – Base de Datos II</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap');
+
+        :root {
+            --blue: #1e40af;
+            --blue-l: #dbeafe;
+            --green: #166534;
+            --green-l: #dcfce7;
+            --gray: #374151;
+            --gray-l: #f9fafb;
+            --border: #e5e7eb;
+            --accent: #2563eb;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            color: var(--gray);
+            background: #f3f4f6;
+        }
+
+        .page {
+            max-width: 900px;
+            margin: 30px auto;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, .10);
+            overflow: hidden;
+        }
+
+        /* ── Header ── */
+        .header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
+            color: #fff;
+            padding: 36px 40px 28px;
+        }
+
+        .header .badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, .2);
+            border: 1px solid rgba(255, 255, 255, .35);
+            border-radius: 20px;
+            padding: 4px 14px;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: .6px;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        .header h1 {
+            font-size: 26px;
+            font-weight: 700;
+            line-height: 1.25;
+        }
+
+        .header p {
+            margin-top: 6px;
+            opacity: .85;
+            font-size: 13px;
+        }
+
+        .meta-row {
+            display: flex;
+            gap: 24px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .meta-item {
+            font-size: 12px;
+            opacity: .9;
+        }
+
+        .meta-item strong {
+            display: block;
+            font-size: 11px;
+            opacity: .7;
+            text-transform: uppercase;
+            letter-spacing: .5px;
+        }
+
+        /* ── Body ── */
+        .body {
+            padding: 36px 40px;
+        }
+
+        /* Objetivo */
+        .objetivo-box {
+            background: var(--blue-l);
+            border-left: 4px solid var(--accent);
+            border-radius: 6px;
+            padding: 14px 18px;
+            margin-bottom: 32px;
+            font-size: 13px;
+            color: var(--blue);
+        }
+
+        .objetivo-box strong {
+            display: block;
+            margin-bottom: 4px;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: .5px;
+        }
+
+        /* Section heading */
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 36px 0 16px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--blue-l);
+        }
+
+        .section-title .num {
+            background: var(--accent);
+            color: #fff;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 13px;
+            flex-shrink: 0;
+        }
+
+        .section-title h2 {
+            font-size: 17px;
+            font-weight: 700;
+            color: #111827;
+        }
+
+        .section-title .tag {
+            margin-left: auto;
+            background: var(--green-l);
+            color: var(--green);
+            border-radius: 12px;
+            padding: 3px 10px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        /* Card */
+        .card {
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            margin-bottom: 24px;
+            overflow: hidden;
+        }
+
+        .card-header {
+            background: var(--gray-l);
+            padding: 10px 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .card-header .letter {
+            background: var(--accent);
+            color: #fff;
+            border-radius: 6px;
+            width: 26px;
+            height: 26px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 12px;
+            flex-shrink: 0;
+        }
+
+        .card-header h3 {
+            font-size: 13px;
+            font-weight: 700;
+            color: #111827;
+        }
+
+        .card-header .pattern {
+            margin-left: auto;
+            font-size: 11px;
+            color: #6b7280;
+            font-style: italic;
+        }
+
+        .card-body {
+            padding: 14px 16px;
+        }
+
+        /* Descripción */
+        .desc {
+            font-size: 13px;
+            color: #4b5563;
+            margin-bottom: 12px;
+            line-height: 1.6;
+        }
+
+        /* SQL block */
+        .sql-wrap {
+            background: #0f172a;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .sql-bar {
+            background: #1e293b;
+            padding: 6px 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sql-bar span {
+            font-size: 11px;
+            color: #94a3b8;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .sql-bar .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        .sql-bar .r {
+            background: #ef4444;
+        }
+
+        .sql-bar .y {
+            background: #f59e0b;
+        }
+
+        .sql-bar .g {
+            background: #22c55e;
+        }
+
+        pre {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12.5px;
+            line-height: 1.7;
+            padding: 16px 18px;
+            color: #e2e8f0;
+            overflow-x: auto;
+            white-space: pre;
+        }
+
+        /* Syntax highlighting */
+        .kw {
+            color: #7dd3fc;
+            font-weight: 600;
+        }
+
+        /* keywords */
+        .fn {
+            color: #a78bfa;
+        }
+
+        /* functions */
+        .str {
+            color: #86efac;
+        }
+
+        /* strings */
+        .cm {
+            color: #6b7280;
+            font-style: italic;
+        }
+
+        /* comments */
+        .num {
+            color: #fb923c;
+        }
+
+        /* numbers */
+
+        /* Note box */
+        .note {
+            background: #fffbeb;
+            border: 1px solid #fcd34d;
+            border-radius: 6px;
+            padding: 10px 14px;
+            font-size: 12px;
+            color: #92400e;
+            margin-top: 10px;
+        }
+
+        .note strong {
+            color: #78350f;
+        }
+
+        /* Extra badge */
+        .extra-badge {
+            display: inline-block;
+            background: #fef3c7;
+            color: #92400e;
+            border: 1px solid #fcd34d;
+            border-radius: 12px;
+            padding: 3px 10px;
+            font-size: 11px;
+            font-weight: 600;
+            margin-left: auto;
+        }
+
+        /* Summary table */
+        table.summary {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 12px;
+            font-size: 13px;
+        }
+
+        table.summary th {
+            background: var(--accent);
+            color: #fff;
+            padding: 9px 12px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 12px;
+        }
+
+        table.summary td {
+            padding: 9px 12px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        table.summary tr:nth-child(even) td {
+            background: var(--gray-l);
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 20px 40px;
+            border-top: 1px solid var(--border);
+            color: #9ca3af;
+            font-size: 12px;
+        }
+
+        @media print {
+            body {
+                background: #fff;
+            }
+
+            .page {
+                box-shadow: none;
+                margin: 0;
+                border-radius: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="page">
+
+        <!-- ── Header ── -->
+        <div class="header">
+            <div class="badge">Base de Datos II · Semana 2 · Sesión 2</div>
+            <h1>Mini-reto: Subconsultas, EXISTS y consultas anidadas</h1>
+            <p>Actividad práctica de repaso — Esquema académico (estudiante, asignatura, matrícula)</p>
+            <div class="meta-row">
+                <div class="meta-item"><strong>Asignatura</strong>Base de Datos II</div>
+                <div class="meta-item"><strong>Unidad</strong>Unidad 1</div>
+                <div class="meta-item"><strong>Semestre</strong>2026-1</div>
+                <div class="meta-item"><strong>Programa</strong>Ingeniería de Sistemas — CORHUILA</div>
+            </div>
+        </div>
+
+        <!-- ── Body ── -->
+        <div class="body">
+
+            <div class="objetivo-box">
+                <strong>🎯 Objetivo práctico</strong>
+                Aplicar subconsultas escalares, de conjunto (IN), correlacionadas (EXISTS / NOT EXISTS) y tablas
+                derivadas en escenarios reales de análisis académico, pasando de "sé qué es una subconsulta" a "sé
+                resolver un caso de negocio con subconsultas".
+            </div>
+
+            <!-- ── Resumen de consultas ── -->
+            <div class="section-title">
+                <div class="num">★</div>
+                <h2>Resumen de consultas</h2>
+            </div>
+            <table class="summary">
+                <thead>
+                    <tr>
+                        <th>Consulta</th>
+                        <th>Enunciado</th>
+                        <th>Patrón</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>A</strong></td>
+                        <td>Notas con el promedio general del semestre</td>
+                        <td>Subconsulta escalar en SELECT</td>
+                    </tr>
+                    <tr>
+                        <td><strong>B</strong></td>
+                        <td>Matrículas con nota &gt; promedio general</td>
+                        <td>Subconsulta escalar en WHERE</td>
+                    </tr>
+                    <tr>
+                        <td><strong>C</strong></td>
+                        <td>Estudiantes en asignaturas "BD%"</td>
+                        <td>IN (subconsulta de conjunto)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>D</strong></td>
+                        <td>Estudiantes que SÍ tienen matrícula</td>
+                        <td>EXISTS (correlacionada)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>E</strong></td>
+                        <td>Estudiantes SIN matrícula en el semestre</td>
+                        <td>NOT EXISTS (correlacionada)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Extra</strong></td>
+                        <td>Notas &gt; promedio de su propia asignatura</td>
+                        <td>Subconsulta correlacionada por grupo</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- ══════════════ CONSULTA A ══════════════ -->
+            <div class="section-title" style="margin-top:40px;">
+                <div class="num">1</div>
+                <h2>Consultas del taller</h2>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <div class="letter">A</div>
+                    <h3>Subconsulta escalar — Nota + promedio general del semestre</h3>
+                    <span class="pattern">Subconsulta escalar en SELECT</span>
+                </div>
+                <div class="card-body">
+                    <p class="desc">
+                        Muestra todas las matrículas del semestre 2026-1 incluyendo la nota individual de cada fila y,
+                        en paralelo, el promedio general de <em>todas</em> las matrículas del semestre. La subconsulta
+                        devuelve un único valor (escalar) y se repite en cada fila del resultado.
+                    </p>
+                    <div class="sql-wrap">
+                        <div class="sql-bar">
+                            <div class="dot r"></div>
+                            <div class="dot y"></div>
+                            <div class="dot g"></div>
+                            <span>consulta_a.sql</span>
+                        </div>
+                        <pre><span class="cm">-- Consulta A: subconsulta escalar
+-- Lista cada matrícula junto al promedio general del semestre.</span>
+
+<span class="kw">SELECT</span>
+    e.nombre                         <span class="kw">AS</span> estudiante,
+    a.codigo                         <span class="kw">AS</span> asignatura,
+    m.nota_final,
+    <span class="fn">ROUND</span>(
+        (<span class="kw">SELECT</span> <span class="fn">AVG</span>(nota_final)
+         <span class="kw">FROM</span>   matricula
+         <span class="kw">WHERE</span>  semestre = <span class="str">'2026-1'</span>)::<span class="kw">NUMERIC</span>, <span class="num">2</span>
+    )                                <span class="kw">AS</span> promedio_general
+<span class="kw">FROM</span>   matricula  m
+<span class="kw">JOIN</span>   estudiante e <span class="kw">ON</span> e.id = m.estudiante_id
+<span class="kw">JOIN</span>   asignatura a <span class="kw">ON</span> a.id = m.asignatura_id
+<span class="kw">WHERE</span>  m.semestre = <span class="str">'2026-1'</span>
+<span class="kw">ORDER BY</span> a.codigo, e.nombre;</pre>
+                    </div>
+                    <div class="note"><strong>💡 Tip:</strong> La subconsulta en el <code>SELECT</code> se ejecuta una
+                        sola vez (no es correlacionada) y su valor se "pega" a todas las filas. Ideal para comparar
+                        individual vs. global.</div>
+                </div>
+            </div>
+
+            <!-- ══════════════ CONSULTA B ══════════════ -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="letter">B</div>
+                    <h3>Mayor que el promedio general</h3>
+                    <span class="pattern">Subconsulta escalar en WHERE</span>
+                </div>
+                <div class="card-body">
+                    <p class="desc">
+                        Filtra únicamente las matrículas cuya <code>nota_final</code> supera el promedio general del
+                        semestre. La subconsulta se evalúa una sola vez y su resultado se usa como umbral de
+                        comparación.
+                    </p>
+                    <div class="sql-wrap">
+                        <div class="sql-bar">
+                            <div class="dot r"></div>
+                            <div class="dot y"></div>
+                            <div class="dot g"></div>
+                            <span>consulta_b.sql</span>
+                        </div>
+                        <pre><span class="cm">-- Consulta B: nota mayor al promedio general del semestre.</span>
+
+<span class="kw">SELECT</span>
+    e.nombre       <span class="kw">AS</span> estudiante,
+    a.codigo       <span class="kw">AS</span> asignatura,
+    m.nota_final
+<span class="kw">FROM</span>   matricula  m
+<span class="kw">JOIN</span>   estudiante e <span class="kw">ON</span> e.id = m.estudiante_id
+<span class="kw">JOIN</span>   asignatura a <span class="kw">ON</span> a.id = m.asignatura_id
+<span class="kw">WHERE</span>  m.semestre = <span class="str">'2026-1'</span>
+  <span class="kw">AND</span>  m.nota_final &gt; (
+           <span class="kw">SELECT</span> <span class="fn">AVG</span>(nota_final)
+           <span class="kw">FROM</span>   matricula
+           <span class="kw">WHERE</span>  semestre = <span class="str">'2026-1'</span>
+       )
+<span class="kw">ORDER BY</span> m.nota_final <span class="kw">DESC</span>;</pre>
+                    </div>
+                    <div class="note"><strong>💡 Tip:</strong> Es idéntico al patrón <em>"mayor que el promedio"</em>.
+                        Si el promedio fuera por grupo (asignatura), habría que correlacionar la subconsulta — ver
+                        Consulta Extra.</div>
+                </div>
+            </div>
+
+            <!-- ══════════════ CONSULTA C ══════════════ -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="letter">C</div>
+                    <h3>Estudiantes en asignaturas "BD%" — subconsulta con IN</h3>
+                    <span class="pattern">IN (subconsulta de conjunto)</span>
+                </div>
+                <div class="card-body">
+                    <p class="desc">
+                        Devuelve los estudiantes que tienen al menos una matrícula en el semestre 2026-1
+                        en una asignatura cuyo código empieza por <em>"BD"</em>. La subconsulta produce
+                        un conjunto de IDs de asignatura; <code>IN</code> filtra las matrículas que coincidan.
+                    </p>
+                    <div class="sql-wrap">
+                        <div class="sql-bar">
+                            <div class="dot r"></div>
+                            <div class="dot y"></div>
+                            <div class="dot g"></div>
+                            <span>consulta_c.sql</span>
+                        </div>
+                        <pre><span class="cm">-- Consulta C: estudiantes matriculados en asignaturas BD%.</span>
+
+<span class="kw">SELECT DISTINCT</span>
+    e.id,
+    e.nombre
+<span class="kw">FROM</span>   estudiante e
+<span class="kw">JOIN</span>   matricula  m <span class="kw">ON</span> m.estudiante_id = e.id
+<span class="kw">WHERE</span>  m.semestre = <span class="str">'2026-1'</span>
+  <span class="kw">AND</span>  m.asignatura_id <span class="kw">IN</span> (
+           <span class="kw">SELECT</span> id
+           <span class="kw">FROM</span>   asignatura
+           <span class="kw">WHERE</span>  codigo <span class="kw">LIKE</span> <span class="str">'BD%'</span>
+       )
+<span class="kw">ORDER BY</span> e.nombre;</pre>
+                    </div>
+                    <div class="note"><strong>💡 Tip:</strong> <code>DISTINCT</code> evita duplicados cuando un
+                        estudiante tiene varias asignaturas BD. Alternativa: agrupar por <code>e.id, e.nombre</code> y
+                        usar <code>HAVING COUNT(*) &gt; 0</code>.</div>
+                </div>
+            </div>
+
+            <!-- ══════════════ CONSULTA D ══════════════ -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="letter">D</div>
+                    <h3>Estudiantes CON matrícula — EXISTS</h3>
+                    <span class="pattern">EXISTS (correlacionada)</span>
+                </div>
+                <div class="card-body">
+                    <p class="desc">
+                        Lista solo los estudiantes que <strong>sí</strong> tienen al menos una matrícula en 2026-1,
+                        sin usar un <code>JOIN</code> directo. <code>EXISTS</code> devuelve <code>TRUE</code> en
+                        cuanto encuentra la primera fila coincidente (más eficiente que <code>IN</code> con valores
+                        nulos).
+                    </p>
+                    <div class="sql-wrap">
+                        <div class="sql-bar">
+                            <div class="dot r"></div>
+                            <div class="dot y"></div>
+                            <div class="dot g"></div>
+                            <span>consulta_d.sql</span>
+                        </div>
+                        <pre><span class="cm">-- Consulta D: estudiantes que SÍ tienen matrícula (EXISTS).</span>
+
+<span class="kw">SELECT</span>
+    e.id,
+    e.nombre
+<span class="kw">FROM</span>   estudiante e
+<span class="kw">WHERE EXISTS</span> (
+    <span class="kw">SELECT</span> <span class="num">1</span>
+    <span class="kw">FROM</span>   matricula m
+    <span class="kw">WHERE</span>  m.estudiante_id = e.id
+      <span class="kw">AND</span>  m.semestre = <span class="str">'2026-1'</span>
+)
+<span class="kw">ORDER BY</span> e.nombre;</pre>
+                    </div>
+                    <div class="note"><strong>💡 Tip:</strong> <code>SELECT 1</code> es convencional dentro de EXISTS
+                        porque el motor solo verifica si existe al menos una fila, nunca retorna el valor. Se puede
+                        escribir <code>SELECT *</code> con idéntico resultado.</div>
+                </div>
+            </div>
+
+            <!-- ══════════════ CONSULTA E ══════════════ -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="letter">E</div>
+                    <h3>Estudiantes SIN matrícula — NOT EXISTS</h3>
+                    <span class="pattern">NOT EXISTS (correlacionada)</span>
+                </div>
+                <div class="card-body">
+                    <p class="desc">
+                        Detecta los estudiantes que <strong>no</strong> tienen ninguna matrícula registrada en el
+                        semestre 2026-1. Es el patrón ideal para encontrar "faltantes" o validar integridad de datos.
+                    </p>
+                    <div class="sql-wrap">
+                        <div class="sql-bar">
+                            <div class="dot r"></div>
+                            <div class="dot y"></div>
+                            <div class="dot g"></div>
+                            <span>consulta_e.sql</span>
+                        </div>
+                        <pre><span class="cm">-- Consulta E: estudiantes SIN matrícula (NOT EXISTS).</span>
+
+<span class="kw">SELECT</span>
+    e.id,
+    e.nombre
+<span class="kw">FROM</span>   estudiante e
+<span class="kw">WHERE NOT EXISTS</span> (
+    <span class="kw">SELECT</span> <span class="num">1</span>
+    <span class="kw">FROM</span>   matricula m
+    <span class="kw">WHERE</span>  m.estudiante_id = e.id
+      <span class="kw">AND</span>  m.semestre = <span class="str">'2026-1'</span>
+)
+<span class="kw">ORDER BY</span> e.nombre;</pre>
+                    </div>
+                    <div class="note"><strong>💡 Tip:</strong> Equivalente a un <em>LEFT JOIN … WHERE m.id IS NULL</em>,
+                        pero <code>NOT EXISTS</code> es más legible en contextos de validación y se comporta
+                        correctamente con valores <code>NULL</code>.</div>
+                </div>
+            </div>
+
+            <!-- ══════════════ EXTRA ══════════════ -->
+            <div class="card" style="border-color:#fcd34d;">
+                <div class="card-header" style="background:#fffbeb;">
+                    <div class="letter" style="background:#f59e0b;">★</div>
+                    <h3>Extra — Mayor que el promedio de su asignatura (correlacionada)</h3>
+                    <span class="extra-badge">Opcional</span>
+                </div>
+                <div class="card-body">
+                    <p class="desc">
+                        Muestra las matrículas cuya nota supera el promedio <em>de su propia asignatura</em>.
+                        A diferencia de la Consulta B, el umbral cambia fila a fila: la subconsulta referencia
+                        <code>m.asignatura_id</code> de la consulta externa → subconsulta
+                        <strong>correlacionada</strong>.
+                    </p>
+                    <div class="sql-wrap">
+                        <div class="sql-bar">
+                            <div class="dot r"></div>
+                            <div class="dot y"></div>
+                            <div class="dot g"></div>
+                            <span>consulta_extra.sql</span>
+                        </div>
+                        <pre><span class="cm">-- Extra: nota mayor al promedio de SU asignatura (subconsulta correlacionada).</span>
+
+<span class="kw">SELECT</span>
+    e.nombre              <span class="kw">AS</span> estudiante,
+    a.codigo              <span class="kw">AS</span> asignatura,
+    m.nota_final,
+    <span class="fn">ROUND</span>(
+        (<span class="kw">SELECT</span> <span class="fn">AVG</span>(m2.nota_final)
+         <span class="kw">FROM</span>   matricula m2
+         <span class="kw">WHERE</span>  m2.asignatura_id = m.asignatura_id   <span class="cm">-- ← correlación</span>
+           <span class="kw">AND</span>  m2.semestre      = m.semestre)::<span class="kw">NUMERIC</span>, <span class="num">2</span>
+    )                     <span class="kw">AS</span> promedio_asignatura
+<span class="kw">FROM</span>   matricula  m
+<span class="kw">JOIN</span>   estudiante e <span class="kw">ON</span> e.id = m.estudiante_id
+<span class="kw">JOIN</span>   asignatura a <span class="kw">ON</span> a.id = m.asignatura_id
+<span class="kw">WHERE</span>  m.semestre = <span class="str">'2026-1'</span>
+  <span class="kw">AND</span>  m.nota_final &gt; (
+           <span class="kw">SELECT</span> <span class="fn">AVG</span>(m2.nota_final)
+           <span class="kw">FROM</span>   matricula m2
+           <span class="kw">WHERE</span>  m2.asignatura_id = m.asignatura_id   <span class="cm">-- ← correlación</span>
+             <span class="kw">AND</span>  m2.semestre      = m.semestre
+       )
+<span class="kw">ORDER BY</span> a.codigo, m.nota_final <span class="kw">DESC</span>;</pre>
+                    </div>
+                    <div class="note"><strong>💡 Tip:</strong> Si el promedio depende del grupo (asignatura, mes,
+                        sucursal…), siempre es una subconsulta <em>correlacionada</em>. Alternativa equivalente y más
+                        eficiente: calcular el promedio por grupo en un <code>JOIN (SELECT … GROUP BY …)</code>.</div>
+                </div>
+            </div>
+
+            <!-- ── Comparativo de patrones ── -->
+            <div class="section-title">
+                <div class="num">2</div>
+                <h2>Comparativo de patrones</h2>
+            </div>
+            <table class="summary">
+                <thead>
+                    <tr>
+                        <th>Patrón</th>
+                        <th>Cuándo usarlo</th>
+                        <th>Qué devuelve la subconsulta</th>
+                        <th>Consulta</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Escalar en SELECT</strong></td>
+                        <td>Quiero mostrar un valor global junto a cada fila</td>
+                        <td>1 fila × 1 columna</td>
+                        <td>A</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Escalar en WHERE</strong></td>
+                        <td>Filtrar por umbral calculado</td>
+                        <td>1 fila × 1 columna</td>
+                        <td>B</td>
+                    </tr>
+                    <tr>
+                        <td><strong>IN (conjunto)</strong></td>
+                        <td>Filtrar por una lista de IDs o valores</td>
+                        <td>N filas × 1 columna</td>
+                        <td>C</td>
+                    </tr>
+                    <tr>
+                        <td><strong>EXISTS</strong></td>
+                        <td>"¿Existe al menos un registro asociado?"</td>
+                        <td>Booleano (TRUE/FALSE)</td>
+                        <td>D</td>
+                    </tr>
+                    <tr>
+                        <td><strong>NOT EXISTS</strong></td>
+                        <td>Detectar faltantes / entidades sin relación</td>
+                        <td>Booleano (TRUE/FALSE)</td>
+                        <td>E</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Correlacionada por grupo</strong></td>
+                        <td>Umbral diferente por fila (asignatura, categoría…)</td>
+                        <td>1 fila × 1 columna (cambia por fila)</td>
+                        <td>Extra</td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div><!-- /body -->
+
+        <div class="footer">
+            Material académico · Base de Datos II · Unidad 1 · Semana 2 · Sesión 2 ·
+            Ingeniería de Sistemas — © 2026 CORHUILA
+        </div>
+    </div>
+</body>
+
+</html>
