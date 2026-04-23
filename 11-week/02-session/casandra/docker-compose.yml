@@ -1,0 +1,47 @@
+services:
+  cassandra:
+    container_name: db-cassandra
+    image: cassandra:5.0
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      CASSANDRA_CLUSTER_NAME: "DevCluster"
+      CASSANDRA_DC: "DC1"
+      CASSANDRA_RACK: "Rack1"
+      CASSANDRA_ENDPOINT_SNITCH: "GossipingPropertyFileSnitch"
+      MAX_HEAP_SIZE: "512M"
+      HEAP_NEWSIZE: "128M"
+    ports:
+      - "9042:9042"
+    networks:
+      - db-network
+    volumes:
+      - cassandra_data:/var/lib/cassandra
+      - ./cassandra.yaml:/etc/cassandra/cassandra.yaml:ro
+      - ./backups:/backups
+    healthcheck:
+      test: ["CMD-SHELL", "nodetool status"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 90s
+    stop_grace_period: 60s
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+          cpus: "1.0"
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+volumes:
+  cassandra_data:
+    driver: local
+
+networks:
+  db-network:
+    driver: bridge
+    name: db-network

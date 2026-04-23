@@ -1,0 +1,21 @@
+cluster_name: 'Test Cluster'
+
+num_tokens: 256
+initial_token:
+# Se recomienda no definir el initial_token cuando se utiliza num_tokens
+
+listen_address: 0.0.0.0  # Escucha en todas las interfaces
+
+broadcast_address: cassandra  # Usar el nombre del servicio o la IP del contenedor
+
+rpc_address: 0.0.0.0  # Permite que Cassandra escuche en todas las interfaces para solicitudes RPC
+
+seed_provider:
+  - class_name: org.apache.cassandra.locator.SimpleSeedProvider
+    parameters:
+         - seeds: "cassandra"  # Puedes usar el nombre del servicio como semilla para el clúster
+
+# Autenticación habilitada
+authenticator: PasswordAuthenticator
+
+endpoint_snitch: GossipingPropertyFileSnitch
