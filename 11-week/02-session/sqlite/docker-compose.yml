@@ -1,0 +1,38 @@
+services:
+  sqlite:
+    container_name: db-sqlite
+    image: nouchka/sqlite3:latest
+    restart: unless-stopped
+    env_file: .env
+    stdin_open: true
+    tty: true
+    volumes:
+      - sqlite_data:/data
+      - ./backups:/backups
+    networks:
+      - db-network
+    healthcheck:
+      test: ["CMD", "sqlite3", "/data/database.db", "SELECT 1;"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 5s
+    deploy:
+      resources:
+        limits:
+          memory: 128M
+          cpus: "0.5"
+    logging:
+      driver: json-file
+      options:
+        max-size: "5m"
+        max-file: "3"
+
+volumes:
+  sqlite_data:
+    driver: local
+
+networks:
+  db-network:
+    driver: bridge
+    name: db-network

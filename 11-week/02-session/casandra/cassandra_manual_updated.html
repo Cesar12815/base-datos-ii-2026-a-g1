@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>cassandra_manual_updated.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="manual-de-configuraci%C3%B3n-y-creaci%C3%B3n-de-base-de-datos-en-cassandra">Manual de Configuración y Creación de Base de Datos en Cassandra</h1>
+<h2 id="1-configuraci%C3%B3n-del-contenedor-de-cassandra">1. Configuración del Contenedor de Cassandra</h2>
+<h3 id="dockerfile">Dockerfile:</h3>
+<pre class="hljs"><code><div><span class="hljs-keyword">FROM</span> cassandra:latest
+
+<span class="hljs-comment"># Copia tu archivo personalizado de configuración de Cassandra</span>
+<span class="hljs-keyword">COPY</span><span class="bash"> cassandra.yaml /etc/cassandra/cassandra.yaml</span>
+
+<span class="hljs-comment"># Exponer el puerto 9042 (para consultas CQL) y 7000 (para Gossip)</span>
+<span class="hljs-keyword">EXPOSE</span> <span class="hljs-number">9042</span> <span class="hljs-number">7000</span>
+
+<span class="hljs-keyword">CMD</span><span class="bash"> [<span class="hljs-string">"cassandra"</span>, <span class="hljs-string">"-f"</span>]</span>
+</div></code></pre>
+<h3 id="docker-composeyml"><code>docker-compose.yml</code>:</h3>
+<pre class="hljs"><code><div><span class="hljs-attr">version:</span> <span class="hljs-string">'3.8'</span>
+
+<span class="hljs-attr">services:</span>
+  <span class="hljs-attr">cassandra:</span>
+    <span class="hljs-attr">image:</span> <span class="hljs-string">cassandra:latest</span>
+    <span class="hljs-attr">container_name:</span> <span class="hljs-string">serve-cassandra</span>
+    <span class="hljs-attr">restart:</span> <span class="hljs-string">always</span>
+    <span class="hljs-attr">environment:</span>
+      <span class="hljs-attr">CASSANDRA_CLUSTER_NAME:</span> <span class="hljs-string">"Test Cluster"</span>
+      <span class="hljs-attr">CASSANDRA_NUM_TOKENS:</span> <span class="hljs-number">256</span>
+      <span class="hljs-attr">CASSANDRA_DC:</span> <span class="hljs-string">DC1</span>
+      <span class="hljs-attr">CASSANDRA_RACK:</span> <span class="hljs-string">Rack1</span>
+      <span class="hljs-attr">CASSANDRA_ENDPOINT_SNITCH:</span> <span class="hljs-string">GossipingPropertyFileSnitch</span>
+      <span class="hljs-attr">CASSANDRA_LISTEN_ADDRESS:</span> <span class="hljs-string">&lt;Coloca_IP_Aqui&gt;</span>  <span class="hljs-comment"># Usa la IP del contenedor</span>
+      <span class="hljs-attr">CASSANDRA_BROADCAST_ADDRESS:</span> <span class="hljs-string">&lt;Coloca_IP_Aqui&gt;</span>  <span class="hljs-comment"># Usa la misma IP del contenedor</span>
+      <span class="hljs-attr">CASSANDRA_SEEDS:</span> <span class="hljs-string">&lt;Coloca_IP_Aqui&gt;</span>  <span class="hljs-comment"># También usa esta IP como semilla</span>
+      <span class="hljs-attr">CASSANDRA_AUTHENTICATOR:</span> <span class="hljs-string">PasswordAuthenticator</span>
+      <span class="hljs-attr">CASSANDRA_USERNAME:</span> <span class="hljs-string">admin</span>
+      <span class="hljs-attr">CASSANDRA_PASSWORD:</span> <span class="hljs-string">abcd1234</span>
+    <span class="hljs-attr">ports:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">"9042:9042"</span>  <span class="hljs-comment"># Puerto para consultas CQL</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">"7000:7000"</span>  <span class="hljs-comment"># Puerto Gossip para la comunicación entre nodos</span>
+    <span class="hljs-attr">volumes:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">cassandra_data:/var/lib/cassandra</span>
+    <span class="hljs-attr">networks:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">network_local_server</span>
+    <span class="hljs-attr">healthcheck:</span>
+      <span class="hljs-attr">test:</span> <span class="hljs-string">["CMD-SHELL",</span> <span class="hljs-string">"cqlsh -u admin -p abcd1234 -e 'describe cluster'"</span><span class="hljs-string">]</span>
+      <span class="hljs-attr">interval:</span> <span class="hljs-string">30s</span>
+      <span class="hljs-attr">timeout:</span> <span class="hljs-string">10s</span>
+      <span class="hljs-attr">retries:</span> <span class="hljs-number">5</span>
+    <span class="hljs-attr">labels:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">com.corhuila.group=databases</span>
+
+<span class="hljs-attr">volumes:</span>
+  <span class="hljs-attr">cassandra_data:</span>
+    <span class="hljs-attr">driver:</span> <span class="hljs-string">local</span>
+
+<span class="hljs-attr">networks:</span>
+  <span class="hljs-attr">network_local_server:</span>
+    <span class="hljs-attr">external:</span> <span class="hljs-literal">true</span>
+</div></code></pre>
+<h3 id="cassandrayaml"><code>cassandra.yaml</code>:</h3>
+<pre class="hljs"><code><div><span class="hljs-attr">cluster_name:</span> <span class="hljs-string">'Test Cluster'</span>
+
+<span class="hljs-attr">num_tokens:</span> <span class="hljs-number">256</span>
+<span class="hljs-attr">initial_token:</span>
+<span class="hljs-comment"># Se recomienda no definir el initial_token cuando se utiliza num_tokens</span>
+
+<span class="hljs-attr">listen_address:</span> <span class="hljs-number">0.0</span><span class="hljs-number">.0</span><span class="hljs-number">.0</span>  <span class="hljs-comment"># Escucha en todas las interfaces</span>
+
+<span class="hljs-attr">broadcast_address:</span> <span class="hljs-string">cassandra</span>  <span class="hljs-comment"># Usar el nombre del servicio o la IP del contenedor</span>
+
+<span class="hljs-attr">rpc_address:</span> <span class="hljs-number">0.0</span><span class="hljs-number">.0</span><span class="hljs-number">.0</span>  <span class="hljs-comment"># Permite que Cassandra escuche en todas las interfaces para solicitudes RPC</span>
+
+<span class="hljs-attr">seed_provider:</span>
+  <span class="hljs-bullet">-</span> <span class="hljs-attr">class_name:</span> <span class="hljs-string">org.apache.cassandra.locator.SimpleSeedProvider</span>
+    <span class="hljs-attr">parameters:</span>
+         <span class="hljs-bullet">-</span> <span class="hljs-attr">seeds:</span> <span class="hljs-string">"cassandra"</span>  <span class="hljs-comment"># Puedes usar el nombre del servicio como semilla para el clúster</span>
+
+<span class="hljs-comment"># Autenticación habilitada</span>
+<span class="hljs-attr">authenticator:</span> <span class="hljs-string">PasswordAuthenticator</span>
+
+<span class="hljs-attr">endpoint_snitch:</span> <span class="hljs-string">GossipingPropertyFileSnitch</span>
+</div></code></pre>
+<h2 id="2-creaci%C3%B3n-de-la-red-de-docker-y-obtenci%C3%B3n-de-la-ip">2. Creación de la Red de Docker y Obtención de la IP</h2>
+<p>Para conectar el contenedor a una red de Docker y obtener la dirección IP, sigue estos pasos:</p>
+<ol>
+<li>
+<p>Crea la red de Docker si no existe con el siguiente comando:</p>
+<pre class="hljs"><code><div> docker network rm network_local_server
+ docker network create network_local_server
+</div></code></pre>
+</li>
+<li>
+<p>Montar contenedor</p>
+</li>
+</ol>
+<pre class="hljs"><code><div>  docker-compose down
+  docker-compose up -d --build
+</div></code></pre>
+<ol start="3">
+<li>
+<p>Verifica la red y obtén la dirección IP interna del contenedor:</p>
+<pre class="hljs"><code><div>docker network inspect network_local_server
+</div></code></pre>
+<p>Busca el contenedor de Cassandra (<code>serve-cassandra</code>) y obtén la dirección IP.</p>
+</li>
+<li>
+<p>Usa la IP obtenida en las variables <code>CASSANDRA_LISTEN_ADDRESS</code>, <code>CASSANDRA_BROADCAST_ADDRESS</code>, y <code>CASSANDRA_SEEDS</code> en el archivo <code>docker-compose.yml</code>.</p>
+</li>
+<li>
+<p>Reestablecer el contenedor.</p>
+</li>
+</ol>
+<pre class="hljs"><code><div>  docker restart serve-cassandra
+</div></code></pre>
+<ol start="6">
+<li>Acceder al contenedor <code>docker exec -it serve-cassandra cqlsh -u admin -p abcd1234</code></li>
+</ol>
+<h2 id="3-creaci%C3%B3n-de-una-base-de-datos-de-prueba">3. Creación de una Base de Datos de Prueba</h2>
+<p>Una vez que Cassandra está corriendo correctamente, sigue estos pasos para crear un keyspace (equivalente a una base de datos) y una tabla.</p>
+<h3 id="1-crear-un-keyspace-de-prueba">1. Crear un Keyspace de prueba:</h3>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> KEYSPACE test_keyspace
+<span class="hljs-keyword">WITH</span> <span class="hljs-keyword">replication</span> = {<span class="hljs-string">'class'</span>: <span class="hljs-string">'SimpleStrategy'</span>, <span class="hljs-string">'replication_factor'</span>: <span class="hljs-number">1</span>};
+</div></code></pre>
+<h3 id="2-usar-el-keyspace">2. Usar el Keyspace:</h3>
+<pre class="hljs"><code><div><span class="hljs-keyword">USE</span> test_keyspace;
+</div></code></pre>
+<h3 id="3-crear-una-tabla">3. Crear una tabla:</h3>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> <span class="hljs-keyword">users</span> (
+  <span class="hljs-keyword">id</span> <span class="hljs-keyword">UUID</span> PRIMARY <span class="hljs-keyword">KEY</span>,
+  <span class="hljs-keyword">name</span> <span class="hljs-built_in">TEXT</span>,
+  email <span class="hljs-built_in">TEXT</span>
+);
+</div></code></pre>
+<h3 id="4-insertar-datos-de-prueba">4. Insertar datos de prueba:</h3>
+<pre class="hljs"><code><div><span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> <span class="hljs-keyword">users</span> (<span class="hljs-keyword">id</span>, <span class="hljs-keyword">name</span>, email) <span class="hljs-keyword">VALUES</span> (<span class="hljs-keyword">uuid</span>(), <span class="hljs-string">'John Doe'</span>, <span class="hljs-string">'john.doe@example.com'</span>);
+<span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> <span class="hljs-keyword">users</span> (<span class="hljs-keyword">id</span>, <span class="hljs-keyword">name</span>, email) <span class="hljs-keyword">VALUES</span> (<span class="hljs-keyword">uuid</span>(), <span class="hljs-string">'Jane Smith'</span>, <span class="hljs-string">'jane.smith@example.com'</span>);
+</div></code></pre>
+<h3 id="5-consultar-los-datos-insertados">5. Consultar los datos insertados:</h3>
+<pre class="hljs"><code><div><span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> <span class="hljs-keyword">users</span>;
+</div></code></pre>
+<h2 id="4-conclusi%C3%B3n">4. Conclusión</h2>
+<p>Este manual te guía a través del proceso completo de configuración de Cassandra en Docker, incluyendo la configuración de la red, obtención de la IP, y la creación de un keyspace y tablas de prueba. Asegúrate de ajustar la IP y las variables de entorno según sea necesario para adaptarse a tu entorno de red.</p>
+
+</body>
+</html>

@@ -1,0 +1,1104 @@
+[
+  {
+    "documentType": "invoice",
+    "invoiceNumber": "FAC-20260001",
+    "issueDate": "2025-08-13",
+    "dueDate": "2025-08-28",
+    "paymentTerms": "15 días",
+    "currency": "COP",
+    "status": "pendiente",
+    "seller": {
+      "name": "Mantenimiento y Redes del Sur SAS",
+      "nit": "901875432-4",
+      "address": "Av Circunvalar #18-90, Garzón, Huila",
+      "email": "cuentas@mrsur.co",
+      "phone": "+57 608 8334501"
+    },
+    "customer": {
+      "name": "María Fernanda Perdomo",
+      "documentType": "CC",
+      "documentNumber": "1002456789",
+      "city": "Pitalito",
+      "email": "maria.fernanda.perdomo@mail.com"
+    },
+    "items": [
+      {
+        "description": "Mantenimiento preventivo",
+        "quantity": 1,
+        "unit": "servicio",
+        "unitPrice": 203736,
+        "lineTotal": 203736
+      },
+      {
+        "description": "Mano de obra",
+        "quantity": 8,
+        "unit": "hora",
+        "unitPrice": 47082,
+        "lineTotal": 376656,
+        "reference": "SRV-323"
+      }
+    ],
+    "subtotal": 580392,
+    "discounts": [
+      {
+        "type": "promocional",
+        "label": "Descuento por nuevo cliente",
+        "percentage": 15,
+        "value": 87059
+      }
+    ],
+    "taxes": [
+      {
+        "name": "IVA",
+        "percentage": 0,
+        "value": 0
+      }
+    ],
+    "total": 493333,
+    "paymentMethod": "tarjeta",
+    "metadata": {
+      "synthetic": true,
+      "sourcePattern": "invoice-template-image",
+      "allowIncompleteFields": true,
+      "createdForImport": true
+    }
+  },
+  {
+    "documentType": "invoice",
+    "invoiceNumber": "FAC-20260002",
+    "issueDate": "2025-12-29",
+    "dueDate": "2026-01-13",
+    "paymentTerms": "15 días",
+    "currency": "COP",
+    "status": "pagada",
+    "seller": {
+      "name": "Soluciones Técnicas Andinas SAS",
+      "nit": "901234567-8",
+      "address": "Cl 9 #7-21, Pitalito, Huila",
+      "email": "billing@solucionesandinas.co",
+      "phone": "+57 608 8361200"
+    },
+    "customer": {
+      "name": "María Fernanda Perdomo",
+      "documentType": "CC",
+      "documentNumber": "1002456789",
+      "city": "Pitalito",
+      "address": "Dirección 46 #14-86",
+      "phone": "+57 3202197935"
+    },
+    "items": [
+      {
+        "description": "Mano de obra",
+        "quantity": 2,
+        "unit": "hora",
+        "unitPrice": 88336,
+        "lineTotal": 176672,
+        "reference": "SRV-396"
+      },
+      {
+        "description": "Mano de obra",
+        "quantity": 5,
+        "unit": "hora",
+        "unitPrice": 51619,
+        "lineTotal": 258095
+      }
+    ],
+    "subtotal": 434767,
+    "total": 434767,
+    "paymentMethod": "efectivo",
+    "notes": "Factura generada con observaciones pendientes.",
+    "metadata": {
+      "synthetic": true,
+      "sourcePattern": "invoice-template-image",
+      "allowIncompleteFields": true,
+      "createdForImport": true
+    }
+  },
+  {
+    "documentType": "invoice",
+    "invoiceNumber": "FAC-20260003",
+    "issueDate": "2025-12-16",
+    "dueDate": "2025-12-16",
+    "paymentTerms": "Pagadero al recibirse",
+    "currency": "COP",
+    "status": "vencida",
+    "seller": {
+      "name": "Soluciones Técnicas Andinas SAS",
+      "nit": "901234567-8",
+      "address": "Cl 9 #7-21, Pitalito, Huila",
+      "email": "billing@solucionesandinas.co",
+      "phone": "+57 608 8361200"
+    },
+    "customer": {
+      "name": "Café Montealto SAS",
+      "documentType": "NIT",
+      "documentNumber": "901667788-2",
+      "city": "Gigante",
+      "address": "Dirección 47 #15-18",
+      "phone": "+57 3102839607"
+    },
+    "items": [
+      {
+        "description": "Configuración de equipos",
+        "quantity": 2,
+        "unit": "unidad",
+        "unitPrice": 155909,
+        "lineTotal": 311818
+      },
+      {
+        "description": "Capacitación básica",
+        "quantity": 2,
+        "unit": "hora",
+        "unitPrice": 77359,
+        "lineTotal": 154718,
+        "reference": "SRV-862"
+      }
+    ],
+    "subtotal": 466536,
+    "total": 555178,
+    "metadata": {
+      "synthetic": true,
+      "sourcePattern": "invoice-template-image",
+      "allowIncompleteFields": true,
+      "createdForImport": true
+    }
+  },
+  {
+    "documentType": "invoice",
+    "invoiceNumber": "FAC-20260004",
+    "issueDate": "2025-09-27",
+    "dueDate": "2025-10-12",
+    "paymentTerms": "15 días",
+    "currency": "COP",
+    "status": "pendiente",
+    "seller": {
+      "name": "Soluciones Técnicas Andinas SAS",
+      "nit": "901234567-8",
+      "address": "Cl 9 #7-21, Pitalito, Huila",
+      "email": "billing@solucionesandinas.co",
+      "phone": "+57 608 8361200"
+    },
+    "customer": {
+      "name": "Jhon Alexander Cuevas",
+      "documentType": "CC",
+      "documentNumber": "1088997766",
+      "city": "Neiva",
+      "email": "jhon.alexander.cuevas@mail.com"
+    },
+    "items": [
+      {
+        "description": "Instalación de red",
+        "quantity": 1,
+        "unit": "servicio",
+        "unitPrice": 283402,
+        "lineTotal": 283402
+      },
+      {
+        "description": "Soporte técnico en sitio",
+        "quantity": 3,
+        "unit": "hora",
+        "unitPrice": 83271,
+        "lineTotal": 249813
+      },
+      {
+        "description": "Soporte técnico en sitio",
+        "quantity": 4,
+        "unit": "hora",
+        "unitPrice": 60016,
+        "lineTotal": 240064
+      },
+      {
+        "description": "Instalación de red",
+        "quantity": 1,
+        "unit": "servicio",
+        "unitPrice": 619902,
+        "lineTotal": 619902
+      }
+    ],
+    "subtotal": 1393181,
+    "discounts": [
+      {
+        "type": "promocional",
+        "label": "Descuento por nuevo cliente",
+        "percentage": 10,
+        "value": 139318
+      }
+    ],
+    "total": 1253863,
+    "metadata": {
+      "synthetic": true,
+      "sourcePattern": "invoice-template-image",
+      "allowIncompleteFields": true,
+      "createdForImport": true
+    }
+  },
+  {
+    "documentType": "invoice",
+    "issueDate": "2026-03-13",
+    "dueDate": "2026-04-12",
+    "paymentTerms": "30 días",
+    "currency": "COP",
+    "status": "emitida",
+    "seller": {
+      "name": "Mantenimiento y Redes del Sur SAS",
+      "nit": "901875432-4",
+      "address": "Av Circunvalar #18-90, Garzón, Huila",
+      "email": "cuentas@mrsur.co",
+      "phone": "+57 608 8334501"
+    },
+    "customer": {
+      "name": "Jhon Alexander Cuevas",
+      "documentType": "CC",
+      "documentNumber": "1088997766",
+      "city": "Neiva",
+      "email": "jhon.alexander.cuevas@mail.com"
+    },
+    "items": [
+      {
+        "description": "Mantenimiento preventivo",
+        "quantity": 1,
+        "unit": "servicio",
+        "unitPrice": 183568,
+        "lineTotal": 183568,
+        "reference": "SRV-702"
+      }
+    ],
+    "subtotal": 183568,
+    "total": 183568,
+    "paymentMethod": "efectivo",
+    "notes": "Documento de soporte para pago parcial.",
+    "metadata": {
+      "synthetic": true,
+      "sourcePattern": "invoice-template-image",
+      "allowIncompleteFields": true,
+      "createdForImport": true
+    }
+  },
+  {
+    "documentType": "invoice",
+    "invoiceNumber": "FAC-20260006",
+    "issueDate": "2025-09-01",
+    "dueDate": "2025-10-01",
+    "paymentTerms": "30 días",
+    "currency": "COP",
+    "status": "pendiente",
+    "seller": {
+      "name": "Mantenimiento y Redes del Sur SAS",
+      "nit": "901875432-4",
+      "address": "Av Circunvalar #18-90, Garzón, Huila",
+      "email": "cuentas@mrsur.co",
+      "phone": "+57 608 8334501"
+    },
+    "customer": {
+      "name": "María Fernanda Perdomo",
+      "documentType": "CC",
+      "documentNumber": "1002456789",
+      "city": "Pitalito",
+      "address": "Dirección 22 #27-63",
+      "phone": "+57 3241983738"
+    },
+    "items": [
+      {
+        "description": "Mano de obra",
+        "quantity": 5,
+        "unit": "hora",
+        "unitPrice": 57556,
+        "lineTotal": 287780,
+        "reference": "SRV-559"
+      },
+      {
+        "description": "Instalación de red",
+        "quantity": 1,
+        "unit": "servicio",
+        "unitPrice": 472401,
+        "lineTotal": 472401,
+        "reference": "SRV-355"
+      },
+      {
+        "description": "Mano de obra",
+        "quantity": 9,
+        "unit": "hora",
+        "unitPrice": 81066,
+        "lineTotal": 729594,
+        "reference": "SRV-767"
+      }
+    ],
+    "subtotal": 1489775,
+    "total": 1489775,
+    "metadata": {
+      "synthetic": true,
+      "sourcePattern": "invoice-template-image",
+      "allowIncompleteFields": true,
+      "createdForImport": true
+    }
+  },
+  {
+    "documentType": "invoice",
+    "invoiceNumber": "FAC-20260007",
+    "issueDate": "2025-09-01",
+    "dueDate": "2025-09-16",
+    "currency": "COP",
+    "status": "pendiente",
+    "seller": {
+      "name": "Servicios Integrales del Huila SAS",
+      "nit": "900456321-7",
+      "address": "Cra 5 #12-34, Neiva, Huila",
+      "email": "facturacion@servicioshuila.com",
+      "phone": "+57 608 8754321"
+    },
+    "customer": {
+      "name": "Oscar Fernando Becerra",
+      "documentType": "CC",
+      "documentNumber": "1078456123",
+      "city": "Neiva",
+      "address": "Dirección 9 #39-9",
+      "email": "oscar.fernando.becerra@mail.com",
+      "phone": "+57 3115130808"
+    },
+    "items": [
+      {
+        "description": "Honorarios por servicios",
+        "quantity": 1,
+        "unit": "servicio",
+        "unitPrice": 443638,
+        "lineTotal": 443638
+      }
+    ],
+    "subtotal": 443638,
+    "taxes": [
+      {
+        "name": "IVA",
+        "percentage": 19,
+        "value": 84291
+      }
+    ],
+    "total": 527929,
+    "paymentMethod": "transferencia",
+    "metadata": {
+      "synthetic": true,
+      "sourcePattern": "invoice-template-image",
+      "allowIncompleteFields": true,
+      "createdForImport": true
+    }
+  },
+  {
+    "documentType": "invoice",
+    "invoiceNumber": "FAC-20260008",
+    "dueDate": "2026-03-23",
+    "paymentTerms": "Pagadero al recibirse",
+    "currency": "COP",
+    "status": "pagada",
+    "seller": {
+      "name": "Servicios Integrales del Huila SAS",
+      "nit": "900456321-7",
+      "address": "Cra 5 #12-34, Neiva, Huila",
+      "email": "facturacion@servicioshuila.com",
+      "phone": "+57 608 8754321"
+    },
+    "customer": {
+      "name": "Carlos Alberto Ramírez",
+      "documentType": "CC",
+      "documentNumber": "1075283941",
+      "city": "Neiva"
+    },
+    "items": [
+      {
+        "description": "Mantenimiento preventivo",
+        "quantity": 2,
+        "unit": "servicio",
+        "unitPrice": 219445,
+        "lineTotal": 438890
+      }
+    ],
+    "subtotal": 438890,
+    "total": 438890,
+    "metadata": {
+      "synthetic": true,
+      "sourcePattern": "invoice-template-image",
+      "allowIncompleteFields": true,
+      "createdForImport": true
+    }
+  },
+  {
+    "documentType": "invoice",
+    "invoiceNumber": "FAC-20260009",
+    "issueDate": "2026-04-08",
+    "dueDate": "2026-04-23",
+    "paymentTerms": "15 días",
+    "currency": "COP",
+    "status": "vencida",
+    "seller": {
+      "name": "Soluciones Técnicas Andinas SAS",
+      "nit": "901234567-8",
+      "address": "Cl 9 #7-21, Pitalito, Huila",
+      "email": "billing@solucionesandinas.co",
+      "phone": "+57 608 8361200"
+    },
+    "customer": {
+      "name": "Servicios Agropecuarios Rivera SAS",
+      "documentType": "NIT",
+      "documentNumber": "900778899-4",
+      "city": "Rivera",
+      "address": "Dirección 71 #28-72",
+      "email": "servicios.agropecuarios.rivera.sas@mail.com"
+    },
+    "items": [
+      {
+        "description": "Mano de obra",
+        "quantity": 8,
+        "unit": "hora",
+        "unitPrice": 63132,
+        "lineTotal": 505056,
+        "reference": "SRV-441"
+      }
+    ],
+    "subtotal": 505056,
+    "taxes": [
+      {
+        "name": "IVA",
+        "percentage": 5,
+        "value": 25253
+      }
+    ],
+    "total": 530309,
+    "notes": "Factura generada con observaciones pendientes.",
+    "metadata": {
+      "synthetic": true,
+      "sourcePattern": "invoice-template-image",
+      "allowIncompleteFields": true,
+      "createdForImport": true
+    }
+  },
+  {
+    "documentType": "invoice",
+    "invoiceNumber": "FAC-20260010",
+    "issueDate": "2025-10-19",
+    "dueDate": "2025-10-27",
+    "paymentTerms": "8 días",
+    "currency": "COP",
+    "status": "pendiente",
+    "seller": {
+      "name": "Mantenimiento y Redes del Sur SAS",
+      "nit": "901875432-4",
+      "address": "Av Circunvalar #18-90, Garzón, Huila",
+      "email": "cuentas@mrsur.co",
+      "phone": "+57 608 8334501"
+    },
+    "customer": {
+      "name": "Café Montealto SAS",
+      "documentType": "NIT",
+      "documentNumber": "901667788-2",
+      "city": "Gigante",
+      "address": "Dirección 105 #30-45",
+      "phone": "+57 3134740036"
+    },
+    "items": [
+      {
+        "description": "Instalación de red",
+        "quantity": 1,
+        "unit": "servicio",
+        "unitPrice": 305990,
+        "lineTotal": 305990,
+        "reference": "SRV-440"
+      },
+      {
+        "description": "Diagnóstico inicial",
+        "quantity": 1,
+        "unit": "servicio",
+        "unitPrice": 107485,
+        "lineTotal": 107485,
+        "reference": "SRV-818"
+      }
+    ],
+    "subtotal": 413475,
+    "discounts": [
+      {
+        "type": "promocional",
+        "label": "Descuento por nuevo cliente",
+        "percentage": 5,
+        "value": 20674
+      }
+    ],
+    "total": 392801,
+    "paymentMethod": "efectivo",
+    "metadata": {
+      "synthetic": true,
+      "sourcePattern": "invoice-template-image",
+      "allowIncompleteFields": true,
+      "createdForImport": true
+    }
+  },
+  {
+    "documentType": "invoice",
+    "invoiceNumber": "FAC-20260011",
+    "issueDate": "2025-12-14",
+    "dueDate": "2025-12-14",
+    "paymentTerms": "Pagadero al recibirse",
+    "currency": "COP",
+    "status": "pagada",
+    "seller": {
+      "name": "Servicios Integrales del Huila SAS",
+      "nit": "900456321-7",
+      "address": "Cra 5 #12-34, Neiva, Huila",
+      "email": "facturacion@servicioshuila.com",
+      "phone": "+57 608 8754321"
+    },
+    "customer": {
+      "name": "Oscar Fernando Becerra",
+      "documentType": "CC",
+      "documentNumber": "1078456123",
+      "city": "Neiva",
+      "address": "Dirección 6 #28-1",
+      "phone": "+57 3204305700"
+    },
+    "items": [
+      {
+        "description": "Diagnóstico inicial",
+        "quantity": 1,
+        "unit": "servicio",
+        "unitPrice": 137745,
+        "lineTotal": 137745
+      }
+    ],
+    "subtotal": 137745,
+    "discounts": [
+      {
+        "type": "promocional",
+        "label": "Descuento por nuevo cliente",
+        "percentage": 15,
+        "value": 20662
+      }
+    ],
+    "taxes": [
+      {
+        "name": "IVA",
+        "percentage": 19,
+        "value": 22246
+      }
+    ],
+    "total": 139329,
+    "metadata": {
+      "synthetic": true,
+      "sourcePattern": "invoice-template-image",
+      "allowIncompleteFields": true,
+      "createdForImport": true
+    }
+  },
+  {
+    "documentType": "invoice",
+    "issueDate": "2025-10-29",
+    "paymentTerms": "15 días",
+    "currency": "COP",
+    "status": "pendiente",
+    "seller": {
+      "name": "Mantenimiento y Redes del Sur SAS",
+      "nit": "901875432-4",
+      "address": "Av Circunvalar #18-90, Garzón, Huila",
+      "email": "cuentas@mrsur.co",
+      "phone": "+57 608 8334501"
+    },
+    "customer": {
+      "name": "Café Montealto SAS",
+      "documentType": "NIT",
+      "documentNumber": "901667788-2",
+      "city": "Gigante",
+      "phone": "+57 3222221854"
+    },
+    "items": [
+      {
+        "description": "Honorarios por servicios",
+        "quantity": 1,
+        "unit": "servicio",
+        "unitPrice": 330425,
+        "lineTotal": 330425,
+        "reference": "SRV-904"
+      },
+      {
+        "description": "Configuración de equipos",
+        "quantity": 4,
+        "unit": "unidad",
+        "unitPrice": 127905,
+        "lineTotal": 511620
+      },
+      {
+        "description": "Mantenimiento preventivo",
+        "quantity": 2,
+        "unit": "servicio",
+        "unitPrice": 238967,
+        "lineTotal": 477934
+      },
+      {
+        "description": "Soporte técnico en sitio",
+        "quantity": 6,
+        "unit": "hora",
+        "unitPrice": 56120,
+        "lineTotal": 336720
+      }
+    ],
+    "subtotal": 1656699,
+    "total": 1656699,
+    "notes": "Documento de soporte para pago parcial.",
+    "metadata": {
+      "synthetic": true,
+      "sourcePattern": "invoice-template-image",
+      "allowIncompleteFields": true,
+      "createdForImport": true
+    }
+  },
+  {
+    "documentType": "invoice",
+    "invoiceNumber": "FAC-20260013",
+    "issueDate": "2025-08-26",
+    "dueDate": "2025-09-03",
+    "paymentTerms": "8 días",
+    "currency": "COP",
+    "status": "vencida",
+    "seller": {
+      "name": "Mantenimiento y Redes del Sur SAS",
+      "nit": "901875432-4",
+      "address": "Av Circunvalar #18-90, Garzón, Huila",
+      "email": "cuentas@mrsur.co",
+      "phone": "+57 608 8334501"
+    },
+    "customer": {
+      "name": "Laura Valentina Rojas",
+      "documentType": "CC",
+      "documentNumber": "1009988776",
+      "city": "Pitalito"
+    },
+    "items": [
+      {
+        "description": "Capacitación básica",
+        "quantity": 2,
+        "unit": "hora",
+        "unitPrice": 112521,
+        "lineTotal": 225042
+      }
+    ],
+    "subtotal": 225042,
+    "taxes": [
+      {
+        "name": "IVA",
+        "percentage": 5,
+        "value": 11252
+      }
+    ],
+    "total": 236294,
+    "metadata": {
+      "synthetic": true,
+      "sourcePattern": "invoice-template-image",
+      "allowIncompleteFields": true,
+      "createdForImport": true
+    }
+  },
+  {
+    "documentType": "invoice",
+    "invoiceNumber": "FAC-20260014",
+    "issueDate": "2025-10-18",
+    "dueDate": "2025-10-26",
+    "paymentTerms": "8 días",
+    "currency": "COP",
+    "status": "emitida",
+    "seller": {
+      "name": "Servicios Integrales del Huila SAS",
+      "nit": "900456321-7",
+      "address": "Cra 5 #12-34, Neiva, Huila",
+      "email": "facturacion@servicioshuila.com",
+      "phone": "+57 608 8754321"
+    },
+    "customer": {
+      "name": "Café Montealto SAS",
+      "documentType": "NIT",
+      "documentNumber": "901667788-2",
+      "city": "Gigante",
+      "address": "Dirección 110 #37-49"
+    },
+    "items": [
+      {
+        "description": "Diagnóstico inicial",
+        "quantity": 1,
+        "unit": "servicio",
+        "unitPrice": 111684,
+        "lineTotal": 111684
+      }
+    ],
+    "subtotal": 111684,
+    "discounts": [
+      {
+        "type": "promocional",
+        "label": "Descuento por nuevo cliente",
+        "percentage": 5,
+        "value": 5584
+      }
+    ],
+    "total": 106100,
+    "notes": "Factura generada con observaciones pendientes.",
+    "metadata": {
+      "synthetic": true,
+      "sourcePattern": "invoice-template-image",
+      "allowIncompleteFields": true,
+      "createdForImport": true
+    }
+  },
+  {
+    "documentType": "invoice",
+    "invoiceNumber": "FAC-20260015",
+    "issueDate": "2026-02-18",
+    "dueDate": "2026-02-18",
+    "paymentTerms": "Pagadero al recibirse",
+    "currency": "COP",
+    "status": "pagada",
+    "seller": {
+      "name": "Mantenimiento y Redes del Sur SAS",
+      "nit": "901875432-4",
+      "address": "Av Circunvalar #18-90, Garzón, Huila",
+      "email": "cuentas@mrsur.co",
+      "phone": "+57 608 8334501"
+    },
+    "customer": {
+      "name": "Carlos Alberto Ramírez",
+      "documentType": "CC",
+      "documentNumber": "1075283941",
+      "city": "Neiva"
+    },
+    "items": [
+      {
+        "description": "Diagnóstico inicial",
+        "quantity": 1,
+        "unit": "servicio",
+        "unitPrice": 146809,
+        "lineTotal": 146809
+      }
+    ],
+    "subtotal": 146809,
+    "discounts": [
+      {
+        "type": "promocional",
+        "label": "Descuento por nuevo cliente",
+        "percentage": 10,
+        "value": 14681
+      }
+    ],
+    "taxes": [
+      {
+        "name": "IVA",
+        "percentage": 5,
+        "value": 6606
+      }
+    ],
+    "total": 138734,
+    "notes": "Aplican condiciones comerciales acordadas.",
+    "metadata": {
+      "synthetic": true,
+      "sourcePattern": "invoice-template-image",
+      "allowIncompleteFields": true,
+      "createdForImport": true
+    }
+  },
+  {
+    "documentType": "invoice",
+    "invoiceNumber": "FAC-20260016",
+    "issueDate": "2025-11-20",
+    "dueDate": "2025-12-20",
+    "paymentTerms": "30 días",
+    "currency": "COP",
+    "status": "emitida",
+    "seller": {
+      "name": "Servicios Integrales del Huila SAS",
+      "nit": "900456321-7",
+      "address": "Cra 5 #12-34, Neiva, Huila",
+      "email": "facturacion@servicioshuila.com",
+      "phone": "+57 608 8754321"
+    },
+    "customer": {
+      "name": "Oscar Fernando Becerra",
+      "documentType": "CC",
+      "city": "Neiva",
+      "address": "Dirección 90 #20-88",
+      "phone": "+57 3191689025"
+    },
+    "items": [
+      {
+        "description": "Configuración de equipos",
+        "quantity": 2,
+        "unit": "unidad",
+        "unitPrice": 149415,
+        "lineTotal": 298830
+      },
+      {
+        "description": "Mano de obra",
+        "quantity": 4,
+        "unit": "hora",
+        "unitPrice": 65384,
+        "lineTotal": 261536,
+        "reference": "SRV-126"
+      },
+      {
+        "description": "Soporte técnico en sitio",
+        "quantity": 7,
+        "unit": "hora",
+        "unitPrice": 75995,
+        "lineTotal": 531965
+      }
+    ],
+    "subtotal": 1092331,
+    "discounts": [
+      {
+        "type": "promocional",
+        "label": "Descuento por nuevo cliente",
+        "percentage": 15,
+        "value": 163850
+      }
+    ],
+    "taxes": [
+      {
+        "name": "IVA",
+        "percentage": 19,
+        "value": 176411
+      }
+    ],
+    "total": 1104892,
+    "paymentMethod": "PSE",
+    "metadata": {
+      "synthetic": true,
+      "sourcePattern": "invoice-template-image",
+      "allowIncompleteFields": true,
+      "createdForImport": true
+    }
+  },
+  {
+    "documentType": "invoice",
+    "invoiceNumber": "FAC-20260017",
+    "issueDate": "2025-12-17",
+    "dueDate": "2026-01-16",
+    "paymentTerms": "30 días",
+    "currency": "COP",
+    "status": "emitida",
+    "seller": {
+      "name": "Mantenimiento y Redes del Sur SAS",
+      "nit": "901875432-4",
+      "address": "Av Circunvalar #18-90, Garzón, Huila",
+      "email": "cuentas@mrsur.co",
+      "phone": "+57 608 8334501"
+    },
+    "customer": {
+      "name": "Servicios Agropecuarios Rivera SAS",
+      "documentType": "NIT",
+      "documentNumber": "900778899-4",
+      "city": "Rivera",
+      "address": "Dirección 67 #13-11",
+      "email": "servicios.agropecuarios.rivera.sas@mail.com"
+    },
+    "items": [
+      {
+        "description": "Diagnóstico inicial",
+        "quantity": 1,
+        "unit": "servicio",
+        "unitPrice": 111122,
+        "lineTotal": 111122
+      },
+      {
+        "description": "Mano de obra",
+        "quantity": 6,
+        "unit": "hora",
+        "unitPrice": 74543,
+        "lineTotal": 447258,
+        "reference": "SRV-575"
+      },
+      {
+        "description": "Diagnóstico inicial",
+        "quantity": 1,
+        "unit": "servicio",
+        "unitPrice": 91880,
+        "lineTotal": 91880
+      },
+      {
+        "description": "Configuración de equipos",
+        "quantity": 2,
+        "unit": "unidad",
+        "unitPrice": 133904,
+        "lineTotal": 267808,
+        "reference": "SRV-916"
+      }
+    ],
+    "subtotal": 918068,
+    "discounts": [
+      {
+        "type": "promocional",
+        "label": "Descuento por nuevo cliente",
+        "percentage": 10,
+        "value": 91807
+      }
+    ],
+    "total": 826261,
+    "notes": "Servicio prestado en sede del cliente.",
+    "metadata": {
+      "synthetic": true,
+      "sourcePattern": "invoice-template-image",
+      "allowIncompleteFields": true,
+      "createdForImport": true
+    }
+  },
+  {
+    "documentType": "invoice",
+    "invoiceNumber": "FAC-20260018",
+    "issueDate": "2025-12-17",
+    "paymentTerms": "15 días",
+    "currency": "COP",
+    "status": "pagada",
+    "seller": {
+      "name": "Mantenimiento y Redes del Sur SAS",
+      "nit": "901875432-4",
+      "address": "Av Circunvalar #18-90, Garzón, Huila",
+      "email": "cuentas@mrsur.co",
+      "phone": "+57 608 8334501"
+    },
+    "customer": {
+      "name": "Laura Valentina Rojas",
+      "documentType": "CC",
+      "documentNumber": "1009988776",
+      "city": "Pitalito",
+      "address": "Dirección 6 #4-71"
+    },
+    "items": [
+      {
+        "description": "Mantenimiento preventivo",
+        "quantity": 1,
+        "unit": "servicio",
+        "unitPrice": 250969,
+        "lineTotal": 250969,
+        "reference": "SRV-860"
+      },
+      {
+        "description": "Instalación de red",
+        "quantity": 1,
+        "unit": "servicio",
+        "unitPrice": 506895,
+        "lineTotal": 506895
+      },
+      {
+        "description": "Soporte técnico en sitio",
+        "quantity": 5,
+        "unit": "hora",
+        "unitPrice": 56588,
+        "lineTotal": 282940
+      }
+    ],
+    "subtotal": 1040804,
+    "discounts": [
+      {
+        "type": "promocional",
+        "label": "Descuento por nuevo cliente",
+        "percentage": 10,
+        "value": 104080
+      }
+    ],
+    "taxes": [
+      {
+        "name": "IVA",
+        "percentage": 0,
+        "value": 0
+      }
+    ],
+    "total": 936724,
+    "paymentMethod": "transferencia",
+    "notes": "Documento de soporte para pago parcial.",
+    "metadata": {
+      "synthetic": true,
+      "sourcePattern": "invoice-template-image",
+      "allowIncompleteFields": true,
+      "createdForImport": true
+    }
+  },
+  {
+    "documentType": "invoice",
+    "invoiceNumber": "FAC-20260019",
+    "issueDate": "2026-01-03",
+    "dueDate": "2026-01-03",
+    "paymentTerms": "Pagadero al recibirse",
+    "currency": "COP",
+    "status": "emitida",
+    "seller": {
+      "name": "Servicios Integrales del Huila SAS",
+      "nit": "900456321-7",
+      "address": "Cra 5 #12-34, Neiva, Huila",
+      "email": "facturacion@servicioshuila.com",
+      "phone": "+57 608 8754321"
+    },
+    "customer": {
+      "name": "Inversiones San Pedro SAS",
+      "documentType": "NIT",
+      "documentNumber": "901112223-5",
+      "city": "Garzón",
+      "address": "Dirección 79 #7-98",
+      "phone": "+57 3202362099"
+    },
+    "subtotal": 1495138,
+    "discounts": [
+      {
+        "type": "promocional",
+        "label": "Descuento por nuevo cliente",
+        "percentage": 15,
+        "value": 224271
+      }
+    ],
+    "total": 1270867,
+    "paymentMethod": "efectivo",
+    "notes": "Factura generada con observaciones pendientes.",
+    "metadata": {
+      "synthetic": true,
+      "sourcePattern": "invoice-template-image",
+      "allowIncompleteFields": true,
+      "createdForImport": true
+    }
+  },
+  {
+    "documentType": "invoice",
+    "invoiceNumber": "FAC-20260020",
+    "issueDate": "2025-11-10",
+    "dueDate": "2025-12-10",
+    "paymentTerms": "30 días",
+    "currency": "COP",
+    "status": "vencida",
+    "seller": {
+      "name": "Mantenimiento y Redes del Sur SAS",
+      "nit": "901875432-4",
+      "address": "Av Circunvalar #18-90, Garzón, Huila",
+      "email": "cuentas@mrsur.co",
+      "phone": "+57 608 8334501"
+    },
+    "customer": {
+      "name": "Oscar Fernando Becerra",
+      "documentType": "CC",
+      "documentNumber": "1078456123",
+      "city": "Neiva",
+      "phone": "+57 3149396529"
+    },
+    "items": [
+      {
+        "description": "Mantenimiento preventivo",
+        "quantity": 1,
+        "unit": "servicio",
+        "unitPrice": 289267,
+        "lineTotal": 289267
+      }
+    ],
+    "subtotal": 289267,
+    "discounts": [
+      {
+        "type": "promocional",
+        "label": "Descuento por nuevo cliente",
+        "percentage": 5,
+        "value": 14463
+      }
+    ],
+    "total": 274804,
+    "paymentMethod": "PSE",
+    "metadata": {
+      "synthetic": true,
+      "sourcePattern": "invoice-template-image",
+      "allowIncompleteFields": true,
+      "createdForImport": true
+    }
+  }
+]
